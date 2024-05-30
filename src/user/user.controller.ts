@@ -18,7 +18,7 @@ export class UserController {
     @UseGuards(MyJwtGuard) //This is my custom decorator
     @Get('detail')
     getDetail(@GetUser() user: User) {
-        // console.log(request.user);
+        // console.log('Controller: ', user);
         return user;
     }
 
@@ -32,7 +32,7 @@ export class UserController {
     @Delete(':id')
     deleteUser(@Param('id') id: string) {
         const userId = Number(id)
-        const k = Array(userId)
+        // const k = Array(userId)
         return this.jwtStrategy.validateForDeleteUser(userId);
 
     }
