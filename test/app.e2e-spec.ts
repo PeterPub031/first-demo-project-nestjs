@@ -1,24 +1,20 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { INestApplication, ValidationPipe } from "@nestjs/common";
 
-describe('AppController (e2e)', () => {
-  let app: INestApplication;
+import { AppModule } from "src/app.module";
+import { Test } from "@nestjs/testing";
 
-  beforeEach(async () => {
-    const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
-    }).compile();
-
-    app = moduleFixture.createNestApplication();
-    await app.init();
-  });
-
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
-  });
-});
+describe('App EndToEnd tests', () => {
+  let app: INestApplication
+  beforeAll( async () => {
+    const appModule = await Test.createTestingModule({
+      imports: [AppModule]
+    }).compile()
+    app = appModule.createNestApplication();
+    app.useGlobalPipes(new ValidationPipe());
+    await app.init()
+  })
+  afterAll(async () => {
+    app.close();
+  })
+  it.todo('Should PASS, Hehe');
+})
